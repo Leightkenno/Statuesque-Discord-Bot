@@ -29,13 +29,12 @@ BOT_CONFIG = {
     "discord_invite": "",
     "activity_check_interval": 3,
     "clan_check_interval": 5,
-    
-    # Clan announcement channels
+
     "clan_public_channel": 1462568455038304287,   # Joins & Promotions
     "clan_private_channel": 1014968289241354240,  # Demotions & Leaves
 }
 
-GUILD_ID = 1423828545192591483 
+GUILD_ID = 975438156868505690 
 
 BOT_TOKEN = ""
 DATABASE = "clan_bot.db"
@@ -2047,6 +2046,386 @@ async def hoflist(i: discord.Interaction):
             embed.add_field(name=f"{cat_info['name']} ({len(members)})", value=member_text or "None", inline=False)
     
     await i.response.send_message(embed=embed, ephemeral=True)
+
+# ==================== DUEL ARENA MINIGAME ====================
+
+# Combat styles and their strengths/weaknesses
+COMBAT_STYLES = {
+    "melee": {"name": "Melee", "emoji": "⚔️", "strong": "ranged", "weak": "magic", "color": (255, 69, 0)},
+    "ranged": {"name": "Ranged", "emoji": "🏹", "strong": "magic", "weak": "melee", "color": (0, 255, 127)},
+    "magic": {"name": "Magic", "emoji": "✨", "strong": "melee", "weak": "ranged", "color": (138, 43, 226)},
+}
+
+# Special attacks
+SPECIAL_ATTACKS = [
+    {"name": "Dragon Claw Spec", "emoji": "🐉", "damage": (30, 50), "style": "melee"},
+    {"name": "Dark Bow Spec", "emoji": "🌑", "damage": (25, 45), "style": "ranged"},
+    {"name": "Guthix Staff Spec", "emoji": "💚", "damage": (20, 40), "style": "magic"},
+    {"name": "AGS Spec", "emoji": "⚡", "damage": (35, 55), "style": "melee"},
+    {"name": "Zaryte Bow Spec", "emoji": "🔮", "damage": (28, 48), "style": "ranged"},
+    {"name": "Ice Barrage", "emoji": "❄️", "damage": (22, 38), "style": "magic"},
+]
+
+# Hit splats
+HIT_SPLATS = ["💥", "⚡", "🔥", "💫", "✨"]
+
+# Pending duel challenges
+pending_duels = {}
+
+class DuelView(View):
+    def __init__(self, challenger: discord.Member, opponent: discord.Member):
+        super().__init__(timeout=60)
+        self.challenger = challenger
+        self.opponent = opponent
+        self.accepted = False
+    
+    @discord.ui.button(label="Accept Duel", style=discord.ButtonStyle.success, emoji="⚔️")
+    async def accept(self, interaction: discord.Interaction, button: Button):
+        if interaction.user.id != self.opponent.id:
+            await interaction.response.send_message("This duel isn't for you!", ephemeral=True)
+            return
+        
+        self.accepted = True
+        self.stop()
+        await interaction.response.defer()
+    
+    @discord.ui.button(label="Decline", style=discord.ButtonStyle.danger, emoji="❌")
+    async def decline(self, interaction: discord.Interaction, button: Button):
+        if interaction.user.id != self.opponent.id:
+            await interaction.response.send_message("This duel isn't for you!", ephemeral=True)
+            return
+        
+        self.accepted = False
+        self.stop()
+        await interaction.response.send_message(f"{self.opponent.display_name} declined the duel!", ephemeral=False)
+
+def generate_duel_frame(
+    player1_name: str, player2_name: str,
+    player1_hp: int, player2_hp: int,
+    max_hp: int, frame_num: int,
+    action_text: str = "", hit_damage: int = 0,
+    attacker: int = 0, winner: int = 0
+) -> Image.Image:
+    """Generate a single frame of the duel animation"""
+    width, height = 500, 300
+    
+    # Create base image
+    img = Image.new('RGB', (width, height), (20, 20, 30))
+    draw = ImageDraw.Draw(img)
+    
+    # Try to load a font, fall back to default
+    try:
+        font_large = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 24)
+        font_medium = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 18)
+        font_small = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 14)
+    except:
+        font_large = ImageFont.load_default()
+        font_medium = ImageFont.load_default()
+        font_small = ImageFont.load_default()
+    
+    # Draw arena background - sand colored
+    draw.rectangle([15, 50, width-15, height-15], fill=(194, 178, 128))
+    
+    # Draw arena border - wooden frame
+    draw.rectangle([5, 5, width-5, height-5], outline=(101, 67, 33), width=5)
+    draw.rectangle([12, 12, width-12, height-12], outline=(139, 90, 43), width=3)
+    
+    # Title bar
+    draw.rectangle([0, 0, width, 45], fill=(50, 50, 60))
+    title = "- DUEL ARENA -"
+    draw.text((width//2, 25), title, fill=(255, 215, 0), font=font_large, anchor="mm")
+    
+    # Draw crossed swords icon (simple)
+    draw.line([20, 15, 40, 35], fill=(192, 192, 192), width=3)
+    draw.line([40, 15, 20, 35], fill=(192, 192, 192), width=3)
+    draw.line([width-40, 15, width-20, 35], fill=(192, 192, 192), width=3)
+    draw.line([width-20, 15, width-40, 35], fill=(192, 192, 192), width=3)
+    
+    # Player 1 (left side)
+    p1_x, p1_y = 100, 150
+    # Character color based on health
+    p1_color = (0, 200, 0) if player1_hp > max_hp * 0.3 else (255, 100, 0) if player1_hp > 0 else (100, 100, 100)
+    
+    # Draw player 1 figure
+    draw.ellipse([p1_x-20, p1_y-40, p1_x+20, p1_y], fill=p1_color)  # Head
+    draw.rectangle([p1_x-15, p1_y, p1_x+15, p1_y+50], fill=p1_color)  # Body
+    
+    # Attack animation offset
+    attack_offset = 0
+    if attacker == 1 and frame_num % 2 == 0:
+        attack_offset = 20
+    
+    # Sword for player 1
+    draw.line([p1_x+15+attack_offset, p1_y+10, p1_x+45+attack_offset, p1_y-10], fill=(192, 192, 192), width=4)
+    
+    # Player 1 name and HP bar
+    draw.text((p1_x, p1_y+70), player1_name[:12], fill=(50, 50, 50), font=font_medium, anchor="mm")
+    
+    # HP bar player 1
+    hp_bar_width = 80
+    hp_fill = int((player1_hp / max_hp) * hp_bar_width)
+    draw.rectangle([p1_x-40, p1_y+85, p1_x+40, p1_y+100], fill=(50, 50, 50))
+    draw.rectangle([p1_x-40, p1_y+85, p1_x+40, p1_y+100], outline=(0, 0, 0), width=2)
+    if hp_fill > 0:
+        hp_color = (0, 200, 0) if player1_hp > max_hp * 0.5 else (255, 165, 0) if player1_hp > max_hp * 0.25 else (200, 0, 0)
+        draw.rectangle([p1_x-39, p1_y+86, p1_x-39+hp_fill, p1_y+99], fill=hp_color)
+    draw.text((p1_x, p1_y+92), f"{player1_hp}/{max_hp}", fill=(255, 255, 255), font=font_small, anchor="mm")
+    
+    # Player 2 (right side)
+    p2_x, p2_y = 400, 150
+    p2_color = (0, 200, 0) if player2_hp > max_hp * 0.3 else (255, 100, 0) if player2_hp > 0 else (100, 100, 100)
+    
+    # Draw player 2 figure
+    draw.ellipse([p2_x-20, p2_y-40, p2_x+20, p2_y], fill=p2_color)  # Head
+    draw.rectangle([p2_x-15, p2_y, p2_x+15, p2_y+50], fill=p2_color)  # Body
+    
+    # Attack animation offset for player 2
+    attack_offset2 = 0
+    if attacker == 2 and frame_num % 2 == 0:
+        attack_offset2 = -20
+    
+    # Sword for player 2 (facing left)
+    draw.line([p2_x-15+attack_offset2, p2_y+10, p2_x-45+attack_offset2, p2_y-10], fill=(192, 192, 192), width=4)
+    
+    # Player 2 name and HP bar
+    draw.text((p2_x, p2_y+70), player2_name[:12], fill=(50, 50, 50), font=font_medium, anchor="mm")
+    
+    # HP bar player 2
+    hp_fill2 = int((player2_hp / max_hp) * hp_bar_width)
+    draw.rectangle([p2_x-40, p2_y+85, p2_x+40, p2_y+100], fill=(50, 50, 50))
+    draw.rectangle([p2_x-40, p2_y+85, p2_x+40, p2_y+100], outline=(0, 0, 0), width=2)
+    if hp_fill2 > 0:
+        hp_color2 = (0, 200, 0) if player2_hp > max_hp * 0.5 else (255, 165, 0) if player2_hp > max_hp * 0.25 else (200, 0, 0)
+        draw.rectangle([p2_x-39, p2_y+86, p2_x-39+hp_fill2, p2_y+99], fill=hp_color2)
+    draw.text((p2_x, p2_y+92), f"{player2_hp}/{max_hp}", fill=(255, 255, 255), font=font_small, anchor="mm")
+    
+    # VS text in center
+    draw.text((width//2, p1_y), "VS", fill=(255, 50, 50), font=font_large, anchor="mm")
+    
+    # Draw hit splat if damage dealt
+    if hit_damage > 0:
+        target_x = p2_x if attacker == 1 else p1_x
+        target_y = p1_y - 50 if attacker == 2 else p2_y - 50
+        
+        # Red hit splat - pointed star shape
+        splat_size = 22
+        draw.ellipse([target_x-splat_size, target_y-splat_size, target_x+splat_size, target_y+splat_size], fill=(180, 0, 0))
+        # Inner circle
+        draw.ellipse([target_x-splat_size+4, target_y-splat_size+4, target_x+splat_size-4, target_y+splat_size-4], fill=(220, 0, 0))
+        draw.text((target_x, target_y), str(hit_damage), fill=(255, 255, 255), font=font_medium, anchor="mm")
+    
+    # Action text at bottom
+    if action_text:
+        # Draw text background
+        draw.rectangle([20, height-55, width-20, height-20], fill=(40, 40, 50))
+        draw.rectangle([20, height-55, width-20, height-20], outline=(100, 100, 100), width=1)
+        draw.text((width//2, height-38), action_text, fill=(255, 255, 100), font=font_medium, anchor="mm")
+    
+    # Winner banner
+    if winner > 0:
+        winner_name = player1_name if winner == 1 else player2_name
+        # Semi-transparent overlay effect
+        draw.rectangle([40, 110, 460, 190], fill=(0, 80, 0))
+        draw.rectangle([40, 110, 460, 190], outline=(255, 215, 0), width=4)
+        draw.rectangle([45, 115, 455, 185], outline=(200, 170, 0), width=2)
+        draw.text((width//2, 135), "VICTORY!", fill=(255, 215, 0), font=font_large, anchor="mm")
+        draw.text((width//2, 165), f"{winner_name} WINS!", fill=(255, 255, 255), font=font_medium, anchor="mm")
+    
+    return img
+
+def generate_duel_gif(player1_name: str, player2_name: str, battle_log: list) -> io.BytesIO:
+    """Generate an animated GIF of the duel"""
+    frames = []
+    max_hp = 100
+    p1_hp = max_hp
+    p2_hp = max_hp
+    
+    # Opening frame
+    frame = generate_duel_frame(player1_name, player2_name, p1_hp, p2_hp, max_hp, 0, "Fight!")
+    frames.append(frame)
+    
+    # Battle frames
+    for i, action in enumerate(battle_log):
+        attacker = action["attacker"]
+        damage = action["damage"]
+        text = action["text"]
+        
+        if attacker == 1:
+            p2_hp = max(0, p2_hp - damage)
+        else:
+            p1_hp = max(0, p1_hp - damage)
+        
+        # Attack frame with hit splat
+        frame = generate_duel_frame(player1_name, player2_name, p1_hp, p2_hp, max_hp, i, text, damage, attacker)
+        frames.append(frame)
+        
+        # Pause frame (no hit splat)
+        frame = generate_duel_frame(player1_name, player2_name, p1_hp, p2_hp, max_hp, i+1, "")
+        frames.append(frame)
+    
+    # Winner frame
+    winner = 1 if p2_hp <= 0 else 2 if p1_hp <= 0 else 0
+    if winner:
+        for _ in range(3):  # Hold winner frame
+            frame = generate_duel_frame(player1_name, player2_name, p1_hp, p2_hp, max_hp, 0, "", 0, 0, winner)
+            frames.append(frame)
+    
+    # Save as GIF
+    gif_buffer = io.BytesIO()
+    frames[0].save(
+        gif_buffer,
+        format='GIF',
+        save_all=True,
+        append_images=frames[1:],
+        duration=700,  # ms per frame
+        loop=0
+    )
+    gif_buffer.seek(0)
+    return gif_buffer
+
+def simulate_duel(player1_name: str, player2_name: str) -> tuple:
+    """Simulate a duel and return battle log and winner"""
+    battle_log = []
+    p1_hp = 100
+    p2_hp = 100
+    turn = random.choice([1, 2])  # Random first attacker
+    
+    attack_messages = [
+        "{attacker} lands a solid hit!",
+        "{attacker} strikes with fury!",
+        "{attacker} attacks!",
+        "{attacker} deals damage!",
+        "{attacker} connects!",
+    ]
+    
+    special_messages = [
+        "{attacker} uses {special}!",
+        "{attacker} unleashes {special}!",
+    ]
+    
+    while p1_hp > 0 and p2_hp > 0:
+        attacker_name = player1_name if turn == 1 else player2_name
+        
+        # 20% chance of special attack
+        if random.random() < 0.2:
+            special = random.choice(SPECIAL_ATTACKS)
+            damage = random.randint(special["damage"][0], special["damage"][1])
+            text = random.choice(special_messages).format(attacker=attacker_name[:10], special=special["name"])
+        else:
+            damage = random.randint(5, 25)
+            text = random.choice(attack_messages).format(attacker=attacker_name[:10])
+        
+        # Apply damage
+        if turn == 1:
+            p2_hp = max(0, p2_hp - damage)
+        else:
+            p1_hp = max(0, p1_hp - damage)
+        
+        battle_log.append({
+            "attacker": turn,
+            "damage": damage,
+            "text": f"{text} ({damage})"
+        })
+        
+        # Switch turns
+        turn = 2 if turn == 1 else 1
+        
+        # Limit battle length
+        if len(battle_log) > 15:
+            break
+    
+    winner = 1 if p2_hp <= 0 else 2
+    return battle_log, winner
+
+@bot.tree.command(name="duel", description="Challenge someone to a duel!")
+@app_commands.describe(opponent="Who do you want to duel?")
+async def duel(i: discord.Interaction, opponent: discord.Member):
+    if not PIL_AVAILABLE:
+        await i.response.send_message("❌ Duel system requires image generation (PIL not available).", ephemeral=True)
+        return
+    
+    if opponent.id == i.user.id:
+        await i.response.send_message("❌ You can't duel yourself!", ephemeral=True)
+        return
+    
+    if opponent.bot:
+        await i.response.send_message("❌ You can't duel a bot!", ephemeral=True)
+        return
+    
+    # Create challenge embed
+    embed = create_embed("⚔️ Duel Challenge!", 
+        f"**{i.user.display_name}** has challenged **{opponent.display_name}** to a duel!\n\n"
+        f"Do you accept the challenge?",
+        0xFF4500
+    )
+    embed.set_thumbnail(url="https://runescape.wiki/images/Duel_Arena_icon.png")
+    
+    view = DuelView(i.user, opponent)
+    await i.response.send_message(content=opponent.mention, embed=embed, view=view)
+    
+    # Wait for response
+    await view.wait()
+    
+    if not view.accepted:
+        return
+    
+    # Start the duel!
+    await i.followup.send("⚔️ **The duel begins!** Generating battle...")
+    
+    # Simulate the duel
+    battle_log, winner = simulate_duel(i.user.display_name, opponent.display_name)
+    
+    # Generate the GIF
+    try:
+        gif_buffer = generate_duel_gif(i.user.display_name, opponent.display_name, battle_log)
+        
+        winner_user = i.user if winner == 1 else opponent
+        loser_user = opponent if winner == 1 else i.user
+        
+        # Create result embed
+        result_embed = create_embed("⚔️ Duel Results",
+            f"🏆 **{winner_user.display_name}** defeated **{loser_user.display_name}**!\n\n"
+            f"Total hits: **{len(battle_log)}**",
+            0xFFD700
+        )
+        
+        file = discord.File(gif_buffer, filename="duel.gif")
+        result_embed.set_image(url="attachment://duel.gif")
+        
+        await i.followup.send(embed=result_embed, file=file)
+    except Exception as e:
+        print(f"Duel GIF error: {e}")
+        # Fallback to text-based result
+        winner_user = i.user if winner == 1 else opponent
+        await i.followup.send(f"⚔️ **{winner_user.display_name}** wins the duel!")
+
+@bot.tree.command(name="quickduel", description="Instant duel result (no GIF)")
+@app_commands.describe(opponent="Who do you want to duel?")
+async def quickduel(i: discord.Interaction, opponent: discord.Member):
+    if opponent.id == i.user.id:
+        await i.response.send_message("❌ You can't duel yourself!", ephemeral=True)
+        return
+    
+    if opponent.bot:
+        await i.response.send_message("❌ You can't duel a bot!", ephemeral=True)
+        return
+    
+    # Instant random result
+    winner = random.choice([i.user, opponent])
+    loser = opponent if winner == i.user else i.user
+    
+    damage_dealt = random.randint(50, 150)
+    
+    embed = create_embed("⚔️ Quick Duel!",
+        f"**{i.user.display_name}** vs **{opponent.display_name}**\n\n"
+        f"🏆 **{winner.display_name}** wins!\n"
+        f"💀 {loser.display_name} was defeated\n"
+        f"💥 Total damage: **{damage_dealt}**",
+        0xFF4500
+    )
+    
+    await i.response.send_message(embed=embed)
+
 
 # ==================== SKILLING COMPETITION ====================
 
