@@ -1,0 +1,33 @@
+{
+  "1423828545192591483": {
+    "enabled": true,
+    "ping_user": true,
+    "ping_role": 1424318699455778927,
+    "title": "Welcome to Statuesque! 🎉",
+    "description": "",
+    "color": "2ECC71",
+    "fields": [
+      {
+        "name": "📋 Getting Started",
+        "value": "• Please let us know if you will be guesting or joining our clan.\n• Tell us your RSN here: <#1204261941518794812>\n• Introduce yourself here: <#1015942178922565672>",
+        "inline": false
+      },
+      {
+        "name": "🎭 Roles & Info",
+        "value": "• Self-Assign Roles here: <#976267430898860072>\n• Current Event Schedule here: <#975513289981329498>",
+        "inline": false
+      },
+      {
+        "name": "🤖 Bot Commands",
+        "value": "• Use the `/help` command from our bot to see all available options.\n• Link your RSN with `/link YourRSN`",
+        "inline": false
+      }
+    ],
+    "footer": {
+      "text": "We're glad you're here!",
+      "icon": true
+    },
+    "thumbnail": "user",
+    "image": null
+  }
+}
