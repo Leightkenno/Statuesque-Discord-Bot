@@ -37,7 +37,7 @@ BOT_CONFIG = {
 GUILD_ID = 975438156868505690 
 
 BOT_TOKEN = ""
-DATABASE = "clan_bot.db"
+DATABASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "clan_bot.db")
 
 # API URLs
 RUNEMETRICS_URL = "https://apps.runescape.com/runemetrics/profile/profile?user={}&activities=20"
@@ -99,7 +99,7 @@ VALUABLE_DROPS = [
     # ED3/Raksha
     "eldritch crossbow", "ecb", "greater chain", "divert", "fleeting boots",
     # FSOA/Kerapac
-    "fractured staff", "fsoa", "staff of armadyl", "greater concentrated blast",
+    "fractured", "fsoa", "staff of armadyl", "greater concentrated blast",
     # Croesus
     "cryptbloom",
     # Zammy
@@ -126,6 +126,113 @@ VALUABLE_DROPS = [
     "essence of finality", "eof", "enchantment of", "scripture of",
 ]
 TRASH_DROPS = ["triskelion", "clue scroll", "elite clue", "hard clue", "master clue", "dragon helm", "dragon shield", "dragon platelegs", "dragon plateskirt", "dragon chainbody", "dragon med", "dragon sq", "dragon dagger", "dragon longsword", "dragon battleaxe", "dragon mace", "warrior's ring", "berserker ring", "seers' ring", "archers' ring", "rune", "adamant", "mithril", "black", "steel", "iron", "bronze", "ancient effigy", "effigy", "lootbeam", "starved ancient effigy", "clue", "casket", "mimic", "puzzle", "reward casket", "Guthix bow", "saradomin sword", "zamorak spear", "loop half", "tooth half", "shield left half", "shield right half", "dragon spear", "curved bone", "long bone"]
+
+# Item aliases for /price command - maps shorthand to full item name
+ITEM_ALIASES = {
+    # Weapons
+    "fsoa": "Fractured Staff of Armadyl",
+    "ecb": "Eldritch crossbow",
+    "sgb": "Seren godbow",
+    "zgs": "Zaros godsword",
+    "sos": "Staff of Sliske",
+    "bolg": "Bow of the Last Guardian",
+    "lotd": "Luck of the Dwarves",
+    "eof": "Essence of Finality amulet",
+    "grico": "Greater Ricochet ability codex",
+    "gconc": "Greater Concentrated Blast ability codex",
+    "gchain": "Greater Chain ability codex",
+    "gbarge": "Greater Barge ability codex",
+    "gfury": "Greater Fury ability codex",
+    "gflurry": "Greater Flurry ability codex",
+    "limitless": "Limitless ability codex",
+    "divert": "Divert ability codex",
+    # Crossbows
+    "ascmh": "Ascension crossbow",
+    "ascoh": "Off-hand Ascension crossbow",
+    "asc": "Ascension crossbow",
+    "blights": "Blightbound crossbow",
+    "bbc": "Blightbound crossbow",
+    # Armour
+    "tmw": "Trimmed masterwork platebody",
+    "cryptbloom": "Cryptbloom helm",
+    "sirenic": "Sirenic hauberk",
+    "elite sirenic": "Elite sirenic hauberk",
+    "tectonic": "Tectonic robe top",
+    "elite tectonic": "Elite tectonic robe top",
+    # Nex
+    "torva helm": "Torva full helm",
+    "torva body": "Torva platebody",
+    "torva legs": "Torva platelegs",
+    "pernix cowl": "Pernix cowl",
+    "pernix body": "Pernix body",
+    "pernix chaps": "Pernix chaps",
+    "virtus mask": "Virtus mask",
+    "virtus body": "Virtus robe top",
+    "virtus legs": "Virtus robe legs",
+    # Scriptures
+    "scripture of jas": "Scripture of Jas",
+    "scripture of ful": "Scripture of Ful",
+    "scripture of wen": "Scripture of Wen",
+    "scripture of bik": "Scripture of Bik",
+    "grim": "Erethdor's grimoire",
+    "grimoire": "Erethdor's grimoire",
+    # Misc
+    "praesul wand": "Wand of the Praesul",
+    "praesul core": "Imperium core",
+    "seismic wand": "Seismic wand",
+    "seismic sing": "Seismic singularity",
+    "sing": "Seismic singularity",
+    "nox scythe": "Noxious scythe",
+    "nox staff": "Noxious staff",
+    "nox bow": "Noxious longbow",
+    "scythe": "Noxious scythe",
+    "zbow": "Zaryte bow",
+    "zcb": "Zaryte crossbow",
+    "leng": "Dark Shard of Leng",
+    "dark ice shard": "Dark Shard of Leng",
+    "dark ice sliver": "Dark Sliver of Leng",
+    "frozen core": "Frozen core of Leng",
+    # Dyes
+    "ice dye": "Ice dye",
+    "shadow dye": "Shadow dye",
+    "blood dye": "Blood dye",
+    "barrows dye": "Barrows dye",
+    "third age dye": "Third Age dye",
+    "3a dye": "Third Age dye",
+    # Rares
+    "phat": "Red partyhat",
+    "red phat": "Red partyhat",
+    "blue phat": "Blue partyhat",
+    "green phat": "Green partyhat",
+    "yellow phat": "Yellow partyhat",
+    "purple phat": "Purple partyhat",
+    "white phat": "White partyhat",
+    "black phat": "Black partyhat",
+    "santa": "Santa hat",
+    "bsh": "Black Santa hat",
+    "hween": "Green h'ween mask",
+    "green hween": "Green h'ween mask",
+    "red hween": "Red h'ween mask",
+    "blue hween": "Blue h'ween mask",
+    "christmas cracker": "Christmas cracker",
+    "cracker": "Christmas cracker",
+    # Arch-Glacor
+    "nilas": "Dark nilas",
+    "leng artefact": "Leng artefact",
+    # Raksha
+    "fleeting boots": "Fleeting Boots",
+    "blast boots": "Blast Diffusion Boots",
+    "laceration": "Laceration Boots",
+    "shadow spike": "Shadow Spike",
+    "grico codex": "Greater Ricochet ability codex",
+    "gchain codex": "Greater Chain ability codex",
+    "divert codex": "Divert ability codex",
+    # Necromancy
+    "omni guard": "Omni guard",
+    "soulbound lantern": "Soulbound lantern",
+    "death guard": "Death guard tier 90",
+    "first necro": "First necromancer's robe top",
+}
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -479,10 +586,15 @@ async def remove_clan_roles(guild, rsn):
     except: pass
 
 async def check_player_activities():
+    # Get all clan members, not just linked accounts
     async with aiosqlite.connect(DATABASE) as db:
-        c = await db.execute("SELECT DISTINCT rsn, discord_id FROM linked_accounts")
-        players = await c.fetchall()
-    for rsn, did in players:
+        c = await db.execute("SELECT rsn, guild_id FROM clan_members")
+        clan_members = await c.fetchall()
+    
+    if not clan_members:
+        return
+    
+    for rsn, guild_id in clan_members:
         try:
             data = await fetch_runemetrics(rsn)
             if not data or "activities" not in data: continue
@@ -496,40 +608,51 @@ async def check_player_activities():
                 if r and r[0] == lt and r[1] == ld: continue
                 await db.execute("INSERT INTO activity_tracking (rsn, last_activity_text, last_activity_date, last_checked) VALUES (?, ?, ?, CURRENT_TIMESTAMP) ON CONFLICT(rsn) DO UPDATE SET last_activity_text=excluded.last_activity_text, last_activity_date=excluded.last_activity_date, last_checked=CURRENT_TIMESTAMP", (rsn, lt, ld))
                 await db.commit()
-            if is_valuable_drop(lt): await announce_drop(rsn, did, lt)
-            elif is_major_achievement(lt): await announce_achievement(rsn, did, lt)
+            if is_valuable_drop(lt): await announce_drop(rsn, guild_id, lt)
+            elif is_major_achievement(lt): await announce_achievement(rsn, guild_id, lt)
         except Exception as e: print(f"Activity error {rsn}: {e}")
         await asyncio.sleep(1)
 
-async def announce_drop(rsn, did, text):
-    embed = create_embed("Rare Drop!", f"**{rsn}**\n\n{text}", BOT_CONFIG["gold_color"])
-    m = re.search(r"(?:received|found|obtained|got)\s+(?:a\s+|an\s+)?(.+?)(?:\s+from|\s+on|\s+at|\s*!|\s*$)", text, re.IGNORECASE)
-    if m: embed.set_thumbnail(url=f"https://runescape.wiki/images/{m.group(1).strip().rstrip('.').replace(' ', '_')}_detail.png")
-    for g in bot.guilds:
-        if g.get_member(did):
-            cid = await get_drops_channel(g.id)
-            if cid:
-                ch = bot.get_channel(cid)
-                if ch:
-                    try: await ch.send(embed=embed)
-                    except: pass
+async def announce_drop(rsn, guild_id, text):
+    embed = create_embed("💎 Rare Drop!", f"**{rsn}**\n\n{text}", BOT_CONFIG["gold_color"])
+    
+    # Try to extract item name and set thumbnail
+    m = re.search(r"(?:received|found|obtained|got)\s+(?:a\s+|an\s+)?(.+?)(?:\s+from|\s+on|\s+at|\s*!|\s*\.|$)", text, re.IGNORECASE)
+    if m:
+        item_name = m.group(1).strip().rstrip('.,!')
+        # Handle special characters for wiki URLs
+        wiki_name = item_name.replace(' ', '_').replace("'", "%27").replace(",", "%2C")
+        # Try detail.png first, common format for items
+        embed.set_thumbnail(url=f"https://runescape.wiki/images/{wiki_name}_detail.png")
+    
+    # Send to the specific guild where this clan member belongs
+    guild = bot.get_guild(guild_id)
+    if guild:
+        cid = await get_drops_channel(guild_id)
+        if cid:
+            ch = bot.get_channel(cid)
+            if ch:
+                try: await ch.send(embed=embed)
+                except: pass
 
-async def announce_achievement(rsn, did, text):
+async def announce_achievement(rsn, guild_id, text):
     t = text.lower()
-    title = "120 Achieved!" if "120" in text else "99 Achieved!" if "99" in text else "200M XP!" if "200m" in t else "MAXED!" if "maxed" in t else "Achievement!"
+    title = "🎉 120 Achieved!" if "120" in text else "🎉 99 Achieved!" if "99" in text else "🎉 200M XP!" if "200m" in t else "🎉 MAXED!" if "maxed" in t else "🎉 Achievement!"
     embed = create_embed(title, f"**{rsn}**\n\n{text}", BOT_CONFIG["success_color"])
     for s in SKILLS:
         if s.lower() in t:
             embed.set_thumbnail(url=SKILL_ICONS.get(s, BOT_CONFIG["logo_url"]))
             break
-    for g in bot.guilds:
-        if g.get_member(did):
-            cid = await get_achievements_channel(g.id)
-            if cid:
-                ch = bot.get_channel(cid)
-                if ch:
-                    try: await ch.send(embed=embed)
-                    except: pass
+    
+    # Send to the specific guild where this clan member belongs
+    guild = bot.get_guild(guild_id)
+    if guild:
+        cid = await get_achievements_channel(guild_id)
+        if cid:
+            ch = bot.get_channel(cid)
+            if ch:
+                try: await ch.send(embed=embed)
+                except: pass
 
 @bot.event
 async def on_ready():
@@ -547,6 +670,28 @@ async def on_ready():
     competition_sync.start()
     try: synced = await bot.tree.sync(); print(f"Synced {len(synced)} commands")
     except Exception as e: print(f"Sync failed: {e}")
+
+@bot.tree.error
+async def on_app_command_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
+    """Global error handler for slash commands"""
+    if isinstance(error, app_commands.CommandInvokeError):
+        original = error.original
+        # Ignore "Unknown interaction" errors - these happen when bot is slow
+        if isinstance(original, discord.errors.NotFound) and original.code == 10062:
+            print(f"[TIMEOUT] Command '{interaction.command.name}' took too long to respond")
+            return
+    
+    # Log other errors
+    print(f"[ERROR] Command '{interaction.command.name}': {error}")
+    
+    # Try to send error message to user
+    try:
+        if interaction.response.is_done():
+            await interaction.followup.send(embed=create_error_embed("An error occurred. Please try again."), ephemeral=True)
+        else:
+            await interaction.response.send_message(embed=create_error_embed("An error occurred. Please try again."), ephemeral=True)
+    except:
+        pass
 
 @tasks.loop(minutes=5)
 async def update_status():
@@ -640,7 +785,7 @@ async def wildy_flash_announcer():
 async def before_wf(): await bot.wait_until_ready()
 
 # ==================== WELCOME SYSTEM ====================
-WELCOME_CONFIG_FILE = "welcome_config.json"
+WELCOME_CONFIG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "welcome_config.json")
 
 DEFAULT_WELCOME_CONFIG = {
     "enabled": True,
@@ -1064,6 +1209,13 @@ async def toggleautorole(i: discord.Interaction):
         await db.execute("INSERT INTO guild_settings (guild_id, auto_role_sync) VALUES (?, ?) ON CONFLICT(guild_id) DO UPDATE SET auto_role_sync=excluded.auto_role_sync", (i.guild.id, new_val))
         await db.commit()
     await i.response.send_message(embed=create_success_embed("Auto Role Sync", f"Now **{'enabled' if new_val else 'disabled'}**.\n\nWhen enabled, Discord roles auto-update with clan rank changes."))
+
+@bot.tree.command(name="checkautorole", description="Check auto role sync status")
+@app_commands.default_permissions(administrator=True)
+async def checkautorole(i: discord.Interaction):
+    enabled = await is_auto_role_enabled(i.guild.id)
+    status = "✅ **Enabled**" if enabled else "❌ **Disabled**"
+    await i.response.send_message(embed=create_embed("Auto Role Sync Status", status))
 
 @bot.tree.command(name="syncme", description="Sync your Discord role with clan rank")
 async def syncme(i: discord.Interaction):
@@ -1498,25 +1650,59 @@ async def events(i: discord.Interaction):
     await i.followup.send(embed=embed)
 
 @bot.tree.command(name="price", description="Check GE prices")
-@app_commands.describe(item="Item name")
+@app_commands.describe(item="Item name (supports shortcuts like FSOA, ECB, SGB, etc.)")
 async def price(i: discord.Interaction, item: str):
     await i.response.defer()
+    
+    # Check for alias first
+    original_input = item
+    item_lower = item.lower().strip()
+    if item_lower in ITEM_ALIASES:
+        item = ITEM_ALIASES[item_lower]
+    
     pd, ed = await fetch_wiki_price(item), await fetch_ely_price(item)
     wp = None
-    if pd:
+    # Check pd is actually a dict with items
+    if pd and isinstance(pd, dict):
         for k in pd:
-            if k.lower() == item.lower(): wp = pd[k].get("price", 0); item = k; break
-        if not wp and pd: k = list(pd.keys())[0]; wp = pd[k].get("price", 0); item = k
+            if isinstance(pd[k], dict) and k.lower() == item.lower():
+                wp = pd[k].get("price", 0)
+                item = k
+                break
+        if not wp:
+            for k in pd:
+                if isinstance(pd[k], dict):
+                    wp = pd[k].get("price", 0)
+                    item = k
+                    break
     ep = ed.get("price") or ed.get("value") if ed and isinstance(ed, dict) else None
     if not wp and not ep:
+        # Check if there's a similar alias they might have meant
+        similar_aliases = [f"**{alias}** → {full}" for alias, full in ITEM_ALIASES.items() if original_input.lower() in alias.lower() or alias.lower() in original_input.lower()]
+        
         results = await search_wiki_items(item)
-        if results: await i.followup.send(embed=create_embed("Not Found", "Did you mean:\n" + "\n".join(f"• {r}" for r in results[:5]), BOT_CONFIG["warning_color"]), ephemeral=True)
-        else: await i.followup.send(embed=create_error_embed(f"No items matching **{item}**"), ephemeral=True)
+        if similar_aliases:
+            await i.followup.send(embed=create_embed("Not Found", f"**{original_input}** not found.\n\n**Did you mean:**\n" + "\n".join(f"• {a}" for a in similar_aliases[:5]), BOT_CONFIG["warning_color"]), ephemeral=True)
+        elif results:
+            await i.followup.send(embed=create_embed("Not Found", f"**{original_input}** not found.\n\n**Did you mean:**\n" + "\n".join(f"• {r}" for r in results[:5]), BOT_CONFIG["warning_color"]), ephemeral=True)
+        else:
+            await i.followup.send(embed=create_error_embed(f"No items matching **{original_input}**"), ephemeral=True)
         return
+    
+    # Build embed
     embed = create_embed(item, f"[Wiki](https://runescape.wiki/w/{item.replace(' ', '_')})")
-    embed.set_thumbnail(url=f"https://runescape.wiki/images/{item.replace(' ', '_')}_detail.png")
+    
+    # Use wiki's special:filepath for more reliable images
+    wiki_image_name = item.replace(' ', '_').replace("'", "%27")
+    embed.set_thumbnail(url=f"https://runescape.wiki/images/{wiki_image_name}_detail.png")
+    
     if wp: embed.add_field(name="Wiki Price", value=f"{wp:,} GP", inline=True)
     if ep: embed.add_field(name="Ely.gg", value=f"{ep:,} GP", inline=True)
+    
+    # Show if alias was used
+    if original_input.lower() != item.lower():
+        embed.set_footer(text=f"Searched: {original_input} → {item}")
+    
     await i.followup.send(embed=embed)
 
 @bot.tree.command(name="setchannel", description="Set announcement channel (Admin)")
@@ -1717,49 +1903,107 @@ except ImportError:
     print("WARNING: Pillow not installed. Hall of Fame image generation disabled. Install with: pip install Pillow")
 
 # Hall of Fame categories with icons
+# emoji_id: Discord custom emoji ID (numeric string) - set to None for no emoji in image
+# icon: Unicode emoji for Discord text display
 HOF_CATEGORIES = {
-    "the_statuesque": {"name": "the Statuesque", "icon": "🏆", "color": (255, 215, 0)},
-    "trimmed_comp": {"name": "Trimmed Completionist", "icon": "🎖️", "color": (255, 105, 180)},
-    "master_quest": {"name": "Master Quest Cape", "icon": "📜", "color": (100, 149, 237)},
-    "ultimate_slayer": {"name": "the Ultimate Slayer", "icon": "🗡️", "color": (50, 205, 50)},
-    "the_wikian": {"name": "The Wikian", "icon": "📚", "color": (255, 140, 0)},
-    "master_of_all": {"name": "Master of All", "icon": "⭐", "color": (255, 215, 0)},
-    "120_all": {"name": "120 All", "icon": "🔥", "color": (255, 69, 0)},
-    "200m_all": {"name": "200M All", "icon": "💎", "color": (0, 191, 255)},
-    "1kc_pet": {"name": "1KC Pet", "icon": "🐾", "color": (255, 215, 0)},
-    "4k_telos": {"name": "4K% God/Goddess of Destruction", "icon": "🏆", "color": (255, 215, 0)},
-    "the_warden": {"name": "the Warden", "icon": "🛡️", "color": (0, 255, 127)},
-    "telos_200ks": {"name": "Telos 200 Killstreak", "icon": "💀", "color": (138, 43, 226)},
-    "the_iceborn": {"name": "the Iceborn", "icon": "❄️", "color": (135, 206, 250)},
-    "glacor_200ks": {"name": "Arch-Glacor 200 Killstreak", "icon": "🧊", "color": (135, 206, 250)},
-    "lord_of_chaos": {"name": "Lord/Lady of Chaos", "icon": "😈", "color": (220, 20, 60)},
-    "wrath_of_chaos": {"name": "Wrath of Chaos", "icon": "🔥", "color": (255, 69, 0)},
-    "of_the_praesul": {"name": "of the Praesul", "icon": "✨", "color": (255, 105, 180)},
-    "insane_final_boss": {"name": "Insane Final Boss", "icon": "👑", "color": (255, 215, 0)},
-    "the_reaper": {"name": "the Reaper", "icon": "💀", "color": (128, 0, 128)},
-    "the_daredevil": {"name": "the Daredevil", "icon": "⚡", "color": (255, 165, 0)},
-    "the_defeater": {"name": "the Defeater", "icon": "⚔️", "color": (255, 215, 0)},
-    "combat_mastery": {"name": "Master Combat Mastery", "icon": "🏅", "color": (192, 192, 192)},
-    "gm_combat": {"name": "Grandmaster Combat Mastery", "icon": "🥇", "color": (255, 215, 0)},
-    "gold_digger": {"name": "Gold Digger", "icon": "💰", "color": (255, 215, 0)},
-    "clueless": {"name": "Clueless", "icon": "📦", "color": (139, 69, 19)},
-    "double_agent": {"name": "Double Agent", "icon": "🕵️", "color": (75, 0, 130)},
-    "clue_chaser": {"name": "the Clue Chaser", "icon": "🗺️", "color": (210, 105, 30)},
-    "master_of_clues": {"name": "Master of Clues", "icon": "📜", "color": (255, 215, 0)},
-    "seasonal_high": {"name": "Seasonal High Scores", "icon": "🏆", "color": (255, 215, 0)},
-    "tavias_rod": {"name": "Tavia's Fishing Rod", "icon": "🎣", "color": (0, 191, 255)},
-    "hazelmere_ring": {"name": "Hazelmere's Signet Ring", "icon": "💍", "color": (50, 205, 50)},
-    "tonys_mattock": {"name": "Tony's Mattock", "icon": "⛏️", "color": (255, 215, 0)},
-    "orlando_hat": {"name": "Orlando Smith's Hat", "icon": "🎩", "color": (139, 69, 19)},
-    "black_partyhat": {"name": "Black Partyhat", "icon": "🎉", "color": (75, 75, 75)},
-    "leagues_dragon": {"name": "Leagues: Dragon (60,000)", "icon": "🐉", "color": (255, 69, 0)},
+    "the_statuesque": {"name": "the Statuesque", "icon": "🏆", "emoji_id": "1463607824885088520", "color": (255, 215, 0)},
+    "trimmed_comp": {"name": "Trimmed Completionist", "icon": "🎖️", "emoji_id": "977222749263122495", "color": (255, 105, 180)},
+    "master_quest": {"name": "Master Quest Cape", "icon": "📜", "emoji_id": "977224698423291934", "color": (100, 149, 237)},
+    "ultimate_slayer": {"name": "the Ultimate Slayer", "icon": "🗡️", "emoji_id": None, "color": (50, 205, 50)},
+    "the_wikian": {"name": "The Wikian", "icon": "📚", "emoji_id": "1463618471421018348", "color": (255, 140, 0)},
+    "master_of_all": {"name": "Master of All", "icon": "⭐", "emoji_id": "1068597304401076324", "color": (255, 215, 0)},
+    "120_all": {"name": "120 All", "icon": "🔥", "emoji_id": "1068597304401076324", "color": (255, 69, 0)},
+    "200m_all": {"name": "200M All", "icon": "💎", "emoji_id": "1068597631141556224", "color": (0, 191, 255)},
+    "1kc_pet": {"name": "1KC Pet", "icon": "🐾", "emoji_id": None, "color": (255, 215, 0)},
+    "4k_telos": {"name": "4K% God/Goddess of Destruction", "icon": "🏆", "emoji_id": "1463605390737408322", "color": (255, 215, 0)},
+    "the_warden": {"name": "the Warden", "icon": "🛡️", "emoji_id": "1463605390737408322", "color": (0, 255, 127)},
+    "telos_200ks": {"name": "Telos 200 Killstreak", "icon": "💀", "emoji_id": "1463605390737408322", "color": (138, 43, 226)},
+    "the_iceborn": {"name": "the Iceborn", "icon": "❄️", "emoji_id": "997855866424393738", "color": (135, 206, 250)},
+    "glacor_200ks": {"name": "Arch-Glacor 200 Killstreak", "icon": "🧊", "emoji_id": "997855866424393738", "color": (135, 206, 250)},
+    "lord_of_chaos": {"name": "Lord/Lady of Chaos", "icon": "😈", "emoji_id": None, "color": (220, 20, 60)},
+    "wrath_of_chaos": {"name": "Wrath of Chaos", "icon": "🔥", "emoji_id": None, "color": (255, 69, 0)},
+    "of_the_praesul": {"name": "of the Praesul", "icon": "✨", "emoji_id": None, "color": (255, 105, 180)},
+    "insane_final_boss": {"name": "Insane Final Boss", "icon": "👑", "emoji_id": None, "color": (255, 215, 0)},
+    "the_reaper": {"name": "the Reaper", "icon": "💀", "emoji_id": None, "color": (128, 0, 128)},
+    "the_daredevil": {"name": "the Daredevil", "icon": "⚡", "emoji_id": None, "color": (255, 165, 0)},
+    "the_defeater": {"name": "the Defeater", "icon": "⚔️", "emoji_id": None, "color": (255, 215, 0)},
+    "combat_mastery": {"name": "Master Combat Mastery", "icon": "🏅", "emoji_id": None, "color": (192, 192, 192)},
+    "gm_combat": {"name": "Grandmaster Combat Mastery", "icon": "🥇", "emoji_id": None, "color": (255, 215, 0)},
+    "gold_digger": {"name": "Gold Digger", "icon": "💰", "emoji_id": "1068597030676615168", "color": (255, 215, 0)},
+    "clueless": {"name": "Clueless", "icon": "📦", "emoji_id": "1068597030676615168", "color": (139, 69, 19)},
+    "double_agent": {"name": "Double Agent", "icon": "🕵️", "emoji_id": "1068597030676615168", "color": (75, 0, 130)},
+    "clue_chaser": {"name": "the Clue Chaser", "icon": "🗺️", "emoji_id": "1068597030676615168", "color": (210, 105, 30)},
+    "master_of_clues": {"name": "Master of Clues", "icon": "📜", "emoji_id": "1068597030676615168", "color": (255, 215, 0)},
+    "seasonal_high": {"name": "Seasonal High Scores", "icon": "🏆", "emoji_id": None, "color": (255, 215, 0)},
+    "tavias_rod": {"name": "Tavia's Fishing Rod", "icon": "🎣", "emoji_id": "1463616963107360838", "color": (0, 191, 255)},
+    "hazelmere_ring": {"name": "Hazelmere's Signet Ring", "icon": "💍", "emoji_id": "1463616731800141854", "color": (50, 205, 50)},
+    "tonys_mattock": {"name": "Tony's Mattock", "icon": "⛏️", "emoji_id": "1463616369844162605", "color": (255, 215, 0)},
+    "orlando_hat": {"name": "Orlando Smith's Hat", "icon": "🎩", "emoji_id": "1463616098502180939", "color": (139, 69, 19)},
+    "black_partyhat": {"name": "Black Partyhat", "icon": "🎉", "emoji_id": "1463615788828332198", "color": (75, 75, 75)},
+    "leagues_dragon": {"name": "Leagues: Dragon (60,000)", "icon": "🐉", "emoji_id": None, "color": (255, 69, 0)},
+    "nex": {"name": "Nex", "icon": "⚔️", "emoji_id": "997855976097071185", "color": (128, 0, 128)},
+    "nex_aod": {"name": "Nex: Angel of Death", "icon": "👼", "emoji_id": "997855854311243906", "color": (255, 105, 180)},
 }
 
-# Store HOF data per guild
+# Cache for downloaded Discord emoji images {emoji_id: PIL.Image}
+hof_emoji_cache = {}
+
+# Store HOF data per guild (includes emoji overrides per category)
+# Format: {guild_id: {cat_key: {"members": [...], "emoji_id": "123456789"}}}
 hof_data_store = {}
 
-def generate_hof_image(categories_data: dict, title: str = "Hall of Fame") -> io.BytesIO:
-    """Generate a Hall of Fame image from category data"""
+async def fetch_discord_emoji(emoji_id: str, animated: bool = False) -> Optional[Image.Image]:
+    """Fetch a Discord emoji by ID and return as PIL Image"""
+    if not PIL_AVAILABLE:
+        return None
+    
+    # Check cache first
+    if emoji_id in hof_emoji_cache:
+        return hof_emoji_cache[emoji_id]
+    
+    # Discord CDN URL for custom emojis
+    ext = "gif" if animated else "png"
+    url = f"https://cdn.discordapp.com/emojis/{emoji_id}.{ext}?size=48"
+    
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as resp:
+                if resp.status == 200:
+                    data = await resp.read()
+                    img = Image.open(io.BytesIO(data))
+                    # Convert to RGBA if needed
+                    if img.mode != 'RGBA':
+                        img = img.convert('RGBA')
+                    # Resize to 24x24 for header icons
+                    img = img.resize((24, 24), Image.Resampling.LANCZOS)
+                    hof_emoji_cache[emoji_id] = img
+                    return img
+    except Exception as e:
+        print(f"Failed to fetch emoji {emoji_id}: {e}")
+    
+    return None
+
+def parse_emoji_string(emoji_str: str) -> Optional[tuple]:
+    """Parse a Discord emoji string like <:name:123456789> or <a:name:123456789>
+    Returns (emoji_id, is_animated) or None"""
+    if not emoji_str:
+        return None
+    
+    # Match custom emoji format: <:name:id> or <a:name:id>
+    match = re.match(r'<(a)?:([^:]+):(\d+)>', emoji_str.strip())
+    if match:
+        is_animated = match.group(1) == 'a'
+        emoji_id = match.group(3)
+        return (emoji_id, is_animated)
+    
+    # Also accept raw emoji ID
+    if emoji_str.strip().isdigit():
+        return (emoji_str.strip(), False)
+    
+    return None
+
+async def generate_hof_image_async(categories_data: dict, guild_id: int = None, title: str = "Hall of Fame") -> io.BytesIO:
+    """Generate a Hall of Fame image from category data with Discord emoji support"""
     if not PIL_AVAILABLE:
         return None
     
@@ -1768,6 +2012,178 @@ def generate_hof_image(categories_data: dict, title: str = "Hall of Fame") -> io
     border_color = (255, 215, 0)
     text_color = (255, 255, 255)
     title_color = (255, 215, 0)
+    bullet_color = (255, 215, 0)  # Gold bullet points
+    
+    # Filter out empty categories
+    filtered_data = {}
+    for k, v in categories_data.items():
+        # Handle both old format (list) and new format (dict with members/emoji_id)
+        if isinstance(v, dict):
+            members = v.get("members", [])
+            if members:
+                filtered_data[k] = v
+        elif v:  # Old format: direct list
+            filtered_data[k] = {"members": v, "emoji_id": None}
+    
+    if not filtered_data:
+        return None
+    
+    # Pre-fetch all emoji images
+    emoji_images = {}
+    for cat_key, cat_data in filtered_data.items():
+        emoji_id = None
+        # Check for category-specific emoji override
+        if isinstance(cat_data, dict) and cat_data.get("emoji_id"):
+            parsed = parse_emoji_string(cat_data["emoji_id"])
+            if parsed:
+                emoji_id, animated = parsed
+        # Fall back to default category emoji
+        elif cat_key in HOF_CATEGORIES and HOF_CATEGORIES[cat_key].get("emoji_id"):
+            emoji_id = HOF_CATEGORIES[cat_key]["emoji_id"]
+            animated = False
+        
+        if emoji_id:
+            img = await fetch_discord_emoji(emoji_id, animated if 'animated' in dir() else False)
+            if img:
+                emoji_images[cat_key] = img
+    
+    # Calculate dimensions - increased sizes
+    num_cols = 3
+    col_width = 450  # Wider columns
+    padding = 50
+    title_height = 100
+    emoji_size = 32  # Larger emoji
+    emoji_padding = 8
+    member_line_height = 28  # More spacing between members
+    category_spacing = 35  # Space between categories
+    header_height = 38  # Height for category header
+    
+    # Calculate height needed for each column
+    col_heights = [0, 0, 0]
+    col_assignments = [[], [], []]
+    
+    for cat_key, cat_data in filtered_data.items():
+        members = cat_data.get("members", []) if isinstance(cat_data, dict) else cat_data
+        if not members:
+            continue
+        # Find shortest column
+        min_col = col_heights.index(min(col_heights))
+        member_count = len(members) if isinstance(members, list) else len(members.split('\n'))
+        cat_height = header_height + (member_count * member_line_height) + category_spacing
+        col_heights[min_col] += cat_height
+        col_assignments[min_col].append((cat_key, cat_data))
+    
+    max_col_height = max(col_heights) if col_heights else 400
+    img_width = (col_width * num_cols) + (padding * 2)
+    img_height = title_height + max_col_height + (padding * 2)
+    img_height = max(img_height, 600)
+    
+    # Create image
+    img = Image.new('RGBA', (img_width, img_height), bg_color)
+    draw = ImageDraw.Draw(img)
+    
+    # Load fonts - check fonts/ directory first (relative to bot), then system fonts
+    bot_dir = os.path.dirname(os.path.abspath(__file__))
+    font_paths = [
+        (os.path.join(bot_dir, "fonts", "DejaVuSans-Bold.ttf"), os.path.join(bot_dir, "fonts", "DejaVuSans.ttf")),
+        ("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"),
+        ("arial.ttf", "arial.ttf"),
+    ]
+    
+    title_font = header_font = text_font = None
+    for bold_path, regular_path in font_paths:
+        try:
+            title_font = ImageFont.truetype(bold_path, 48)
+            header_font = ImageFont.truetype(bold_path, 22)
+            text_font = ImageFont.truetype(regular_path, 18)
+            break
+        except:
+            continue
+    
+    if not title_font:
+        title_font = ImageFont.load_default()
+        header_font = ImageFont.load_default()
+        text_font = ImageFont.load_default()
+    
+    # Draw border
+    draw.rectangle([8, 8, img_width-9, img_height-9], outline=border_color, width=4)
+    draw.rectangle([15, 15, img_width-16, img_height-16], outline=(80, 80, 80), width=2)
+    
+    # Draw title
+    title_text = f"~ Hall of Fame ~"
+    try:
+        bbox = draw.textbbox((0, 0), title_text, font=title_font)
+        title_w = bbox[2] - bbox[0]
+    except:
+        title_w = len(title_text) * 24
+    
+    # Draw centered title
+    draw.text(((img_width - title_w) // 2, 30), title_text, fill=title_color, font=title_font)
+    
+    # Draw categories in columns
+    x_positions = [padding, padding + col_width, padding + (col_width * 2)]
+    
+    for col_idx, assignments in enumerate(col_assignments):
+        x = x_positions[col_idx]
+        y = title_height + padding
+        
+        for cat_key, cat_data in assignments:
+            cat_info = HOF_CATEGORIES.get(cat_key, {"name": cat_key.replace("_", " ").title(), "icon": "🏆", "color": (255, 215, 0)})
+            members = cat_data.get("members", []) if isinstance(cat_data, dict) else cat_data
+            
+            # Draw emoji if available
+            text_x = x
+            if cat_key in emoji_images:
+                emoji_img = emoji_images[cat_key]
+                # Resize emoji to match new size
+                emoji_img_resized = emoji_img.resize((emoji_size, emoji_size), Image.Resampling.LANCZOS)
+                # Paste emoji with alpha channel
+                img.paste(emoji_img_resized, (x, y - 4), emoji_img_resized)
+                text_x = x + emoji_size + emoji_padding
+            
+            # Draw category header
+            header_text = f"{cat_info['name']}"
+            draw.text((text_x, y), header_text, fill=cat_info['color'], font=header_font)
+            y += header_height
+            
+            # Draw members with proper bullet points
+            if isinstance(members, list):
+                for member in members:
+                    # Draw gold dash/bullet
+                    draw.text((x, y), "-", fill=bullet_color, font=text_font)
+                    # Draw member name with offset
+                    draw.text((x + 18, y), member, fill=text_color, font=text_font)
+                    y += member_line_height
+            elif isinstance(members, str):
+                for member in members.split('\n'):
+                    if member.strip():
+                        draw.text((x, y), "-", fill=bullet_color, font=text_font)
+                        draw.text((x + 18, y), member.strip(), fill=text_color, font=text_font)
+                        y += member_line_height
+            
+            y += category_spacing  # Space between categories
+    
+    # Convert to RGB for PNG saving (remove alpha)
+    rgb_img = Image.new('RGB', img.size, bg_color)
+    rgb_img.paste(img, mask=img.split()[3] if img.mode == 'RGBA' else None)
+    
+    # Save to BytesIO
+    output = io.BytesIO()
+    rgb_img.save(output, format='PNG', quality=95)
+    output.seek(0)
+    return output
+
+def generate_hof_image(categories_data: dict, title: str = "Hall of Fame") -> io.BytesIO:
+    """Generate a Hall of Fame image from category data (sync version, no emoji support)"""
+    if not PIL_AVAILABLE:
+        return None
+    
+    # Image settings
+    bg_color = (30, 30, 35)
+    border_color = (255, 215, 0)
+    text_color = (255, 255, 255)
+    title_color = (255, 215, 0)
+    bullet_color = (255, 215, 0)
     
     # Filter out empty categories
     categories_data = {k: v for k, v in categories_data.items() if v}
@@ -1775,11 +2191,14 @@ def generate_hof_image(categories_data: dict, title: str = "Hall of Fame") -> io
     if not categories_data:
         return None
     
-    # Calculate dimensions
+    # Calculate dimensions - increased sizes
     num_cols = 3
-    col_width = 400
-    padding = 40
-    title_height = 80
+    col_width = 450
+    padding = 50
+    title_height = 100
+    member_line_height = 28
+    category_spacing = 35
+    header_height = 38
     
     # Calculate height needed for each column
     col_heights = [0, 0, 0]
@@ -1791,7 +2210,7 @@ def generate_hof_image(categories_data: dict, title: str = "Hall of Fame") -> io
         # Find shortest column
         min_col = col_heights.index(min(col_heights))
         member_count = len(members) if isinstance(members, list) else len(members.split('\n'))
-        cat_height = 35 + (member_count * 22) + 30
+        cat_height = header_height + (member_count * member_line_height) + category_spacing
         col_heights[min_col] += cat_height
         col_assignments[min_col].append((cat_key, members))
     
@@ -1804,20 +2223,28 @@ def generate_hof_image(categories_data: dict, title: str = "Hall of Fame") -> io
     img = Image.new('RGB', (img_width, img_height), bg_color)
     draw = ImageDraw.Draw(img)
     
-    # Load fonts
-    try:
-        title_font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 40)
-        header_font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 18)
-        text_font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 14)
-    except:
+    # Load fonts - check fonts/ directory first (relative to bot), then system fonts
+    bot_dir = os.path.dirname(os.path.abspath(__file__))
+    font_paths = [
+        (os.path.join(bot_dir, "fonts", "DejaVuSans-Bold.ttf"), os.path.join(bot_dir, "fonts", "DejaVuSans.ttf")),
+        ("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"),
+        ("arial.ttf", "arial.ttf"),
+    ]
+    
+    title_font = header_font = text_font = None
+    for bold_path, regular_path in font_paths:
         try:
-            title_font = ImageFont.truetype("arial.ttf", 40)
-            header_font = ImageFont.truetype("arialbd.ttf", 18)
-            text_font = ImageFont.truetype("arial.ttf", 14)
+            title_font = ImageFont.truetype(bold_path, 48)
+            header_font = ImageFont.truetype(bold_path, 26)
+            text_font = ImageFont.truetype(regular_path, 22)
+            break
         except:
-            title_font = ImageFont.load_default()
-            header_font = ImageFont.load_default()
-            text_font = ImageFont.load_default()
+            continue
+    
+    if not title_font:
+        title_font = ImageFont.load_default()
+        header_font = ImageFont.load_default()
+        text_font = ImageFont.load_default()
     
     # Draw border
     draw.rectangle([8, 8, img_width-9, img_height-9], outline=border_color, width=4)
@@ -1829,10 +2256,10 @@ def generate_hof_image(categories_data: dict, title: str = "Hall of Fame") -> io
         bbox = draw.textbbox((0, 0), title_text, font=title_font)
         title_w = bbox[2] - bbox[0]
     except:
-        title_w = len(title_text) * 20
+        title_w = len(title_text) * 24
     
-    # Draw centered title (no emoji to avoid font issues)
-    draw.text(((img_width - title_w) // 2, 25), title_text, fill=title_color, font=title_font)
+    # Draw centered title
+    draw.text(((img_width - title_w) // 2, 30), title_text, fill=title_color, font=title_font)
     
     # Draw categories in columns
     x_positions = [padding, padding + col_width, padding + (col_width * 2)]
@@ -1847,20 +2274,22 @@ def generate_hof_image(categories_data: dict, title: str = "Hall of Fame") -> io
             # Draw category header
             header_text = f"{cat_info['name']}"
             draw.text((x, y), header_text, fill=cat_info['color'], font=header_font)
-            y += 28
+            y += header_height
             
-            # Draw members
+            # Draw members with proper bullet points
             if isinstance(members, list):
                 for member in members:
-                    draw.text((x, y), f"• {member}", fill=text_color, font=text_font)
-                    y += 20
+                    draw.text((x, y), "-", fill=bullet_color, font=text_font)
+                    draw.text((x + 18, y), member, fill=text_color, font=text_font)
+                    y += member_line_height
             elif isinstance(members, str):
                 for member in members.split('\n'):
                     if member.strip():
-                        draw.text((x, y), f"• {member.strip()}", fill=text_color, font=text_font)
-                        y += 20
+                        draw.text((x, y), "-", fill=bullet_color, font=text_font)
+                        draw.text((x + 18, y), member.strip(), fill=text_color, font=text_font)
+                        y += member_line_height
             
-            y += 25  # Space between categories
+            y += category_spacing  # Space between categories
     
     # Save to BytesIO
     output = io.BytesIO()
@@ -1870,7 +2299,7 @@ def generate_hof_image(categories_data: dict, title: str = "Hall of Fame") -> io
 
 # HOF Editor Modal
 class HofEditModal(discord.ui.Modal):
-    def __init__(self, guild_id: int, cat_key: str, cat_name: str, current_members: list):
+    def __init__(self, guild_id: int, cat_key: str, cat_name: str, current_members: list, current_emoji: str = None):
         super().__init__(title="Edit Hall of Fame Category")
         self.guild_id = guild_id
         self.cat_key = cat_key
@@ -1884,17 +2313,35 @@ class HofEditModal(discord.ui.Modal):
             default="\n".join(current_members) if current_members else ""
         )
         self.add_item(self.members_input)
+        
+        # Add emoji input field
+        self.emoji_input = discord.ui.TextInput(
+            label="Category Emoji (Discord custom emoji)",
+            style=discord.TextStyle.short,
+            placeholder="<:emoji_name:123456789> or emoji ID",
+            required=False,
+            max_length=100,
+            default=current_emoji or ""
+        )
+        self.add_item(self.emoji_input)
     
     async def on_submit(self, interaction: discord.Interaction):
         if self.guild_id not in hof_data_store:
             hof_data_store[self.guild_id] = {}
         
         members = [m.strip() for m in self.members_input.value.split('\n') if m.strip()]
-        hof_data_store[self.guild_id][self.cat_key] = members
+        emoji_str = self.emoji_input.value.strip() if self.emoji_input.value else None
+        
+        # Store in new format with members and emoji
+        hof_data_store[self.guild_id][self.cat_key] = {
+            "members": members,
+            "emoji_id": emoji_str
+        }
         
         count = len(members)
+        emoji_msg = f"\nEmoji: {emoji_str}" if emoji_str else ""
         await interaction.response.send_message(
-            f"✅ **{self.cat_key.replace('_', ' ').title()}** updated with **{count}** members!\n"
+            f"✅ **{self.cat_key.replace('_', ' ').title()}** updated with **{count}** members!{emoji_msg}\n"
             f"Use `/hofpreview` to see the current image or `/hofpost` to post it publicly.",
             ephemeral=True
         )
@@ -1914,8 +2361,15 @@ HOF_CHOICES_2 = [
 @app_commands.choices(category=HOF_CHOICES_1)
 async def hofedit(i: discord.Interaction, category: str):
     cat_info = HOF_CATEGORIES.get(category, {"name": category})
-    current = hof_data_store.get(i.guild.id, {}).get(category, [])
-    modal = HofEditModal(i.guild.id, category, cat_info["name"], current)
+    current_data = hof_data_store.get(i.guild.id, {}).get(category, {})
+    # Handle both old format (list) and new format (dict)
+    if isinstance(current_data, dict):
+        current_members = current_data.get("members", [])
+        current_emoji = current_data.get("emoji_id", "")
+    else:
+        current_members = current_data if isinstance(current_data, list) else []
+        current_emoji = ""
+    modal = HofEditModal(i.guild.id, category, cat_info["name"], current_members, current_emoji)
     await i.response.send_modal(modal)
 
 @bot.tree.command(name="hofedit2", description="Edit Hall of Fame (more categories)")
@@ -1923,25 +2377,40 @@ async def hofedit(i: discord.Interaction, category: str):
 @app_commands.choices(category=HOF_CHOICES_2)
 async def hofedit2(i: discord.Interaction, category: str):
     cat_info = HOF_CATEGORIES.get(category, {"name": category})
-    current = hof_data_store.get(i.guild.id, {}).get(category, [])
-    modal = HofEditModal(i.guild.id, category, cat_info["name"], current)
+    current_data = hof_data_store.get(i.guild.id, {}).get(category, {})
+    # Handle both old format (list) and new format (dict)
+    if isinstance(current_data, dict):
+        current_members = current_data.get("members", [])
+        current_emoji = current_data.get("emoji_id", "")
+    else:
+        current_members = current_data if isinstance(current_data, list) else []
+        current_emoji = ""
+    modal = HofEditModal(i.guild.id, category, cat_info["name"], current_members, current_emoji)
     await i.response.send_modal(modal)
 
 @bot.tree.command(name="hofcustom", description="Add a custom Hall of Fame category")
-@app_commands.describe(category_name="Name for the custom category", members="Members (comma separated)")
-async def hofcustom(i: discord.Interaction, category_name: str, members: str):
+@app_commands.describe(
+    category_name="Name for the custom category", 
+    members="Members (comma separated)",
+    emoji="Discord custom emoji (e.g. <:emoji:123456789>)"
+)
+async def hofcustom(i: discord.Interaction, category_name: str, members: str, emoji: str = None):
     if i.guild.id not in hof_data_store:
         hof_data_store[i.guild.id] = {}
     
     cat_key = category_name.lower().replace(" ", "_")
     if cat_key not in HOF_CATEGORIES:
-        HOF_CATEGORIES[cat_key] = {"name": category_name, "icon": "🏆", "color": (255, 215, 0)}
+        HOF_CATEGORIES[cat_key] = {"name": category_name, "icon": "🏆", "emoji_id": None, "color": (255, 215, 0)}
     
     member_list = [m.strip() for m in members.split(',') if m.strip()]
-    hof_data_store[i.guild.id][cat_key] = member_list
+    hof_data_store[i.guild.id][cat_key] = {
+        "members": member_list,
+        "emoji_id": emoji.strip() if emoji else None
+    }
     
+    emoji_msg = f"\nEmoji: {emoji}" if emoji else ""
     await i.response.send_message(
-        f"✅ Custom category **{category_name}** added with **{len(member_list)}** members!",
+        f"✅ Custom category **{category_name}** added with **{len(member_list)}** members!{emoji_msg}",
         ephemeral=True
     )
 
@@ -1958,16 +2427,26 @@ async def hofpreview(i: discord.Interaction):
         await i.followup.send("❌ No Hall of Fame data yet! Use `/hofedit` to add categories.", ephemeral=True)
         return
     
-    img_buffer = generate_hof_image(data)
+    # Use async generator to support Discord emoji fetching
+    img_buffer = await generate_hof_image_async(data, i.guild.id)
     if not img_buffer:
         await i.followup.send("❌ Failed to generate image.", ephemeral=True)
         return
     
     file = discord.File(img_buffer, filename="hall_of_fame_preview.png")
     
-    # Count stats
-    total_entries = sum(len(v) for v in data.values() if v)
-    total_cats = len([v for v in data.values() if v])
+    # Count stats - handle both old and new data formats
+    total_entries = 0
+    total_cats = 0
+    for v in data.values():
+        if isinstance(v, dict):
+            members = v.get("members", [])
+            if members:
+                total_entries += len(members)
+                total_cats += 1
+        elif v:
+            total_entries += len(v)
+            total_cats += 1
     
     await i.followup.send(
         f"🏆 **Hall of Fame Preview**\n"
@@ -1991,7 +2470,8 @@ async def hofpost(i: discord.Interaction, channel: Optional[discord.TextChannel]
         await i.followup.send("❌ No Hall of Fame data yet! Use `/hofedit` to add categories.")
         return
     
-    img_buffer = generate_hof_image(data)
+    # Use async generator to support Discord emoji fetching
+    img_buffer = await generate_hof_image_async(data, i.guild.id)
     if not img_buffer:
         await i.followup.send("❌ Failed to generate image.")
         return
@@ -2028,6 +2508,101 @@ async def hofclear(i: discord.Interaction):
         hof_data_store[i.guild.id] = {}
     await i.response.send_message("✅ Hall of Fame data cleared!", ephemeral=True)
 
+@bot.tree.command(name="hofemoji", description="Set a Discord emoji for a Hall of Fame category")
+@app_commands.describe(
+    category="Select category to set emoji for",
+    emoji="Discord custom emoji (e.g. <:emoji:123456789>) or leave blank to clear"
+)
+@app_commands.choices(category=HOF_CHOICES_1)
+async def hofemoji(i: discord.Interaction, category: str, emoji: str = None):
+    if i.guild.id not in hof_data_store:
+        hof_data_store[i.guild.id] = {}
+    
+    cat_info = HOF_CATEGORIES.get(category, {"name": category})
+    current_data = hof_data_store.get(i.guild.id, {}).get(category, {})
+    
+    # Handle both old format (list) and new format (dict)
+    if isinstance(current_data, dict):
+        members = current_data.get("members", [])
+    else:
+        members = current_data if isinstance(current_data, list) else []
+    
+    # Update with emoji
+    emoji_str = emoji.strip() if emoji else None
+    hof_data_store[i.guild.id][category] = {
+        "members": members,
+        "emoji_id": emoji_str
+    }
+    
+    if emoji_str:
+        # Validate emoji format
+        parsed = parse_emoji_string(emoji_str)
+        if parsed:
+            await i.response.send_message(
+                f"✅ Emoji for **{cat_info['name']}** set to {emoji_str}\n"
+                f"Use `/hofpreview` to see it in the image!",
+                ephemeral=True
+            )
+        else:
+            await i.response.send_message(
+                f"⚠️ Emoji set to `{emoji_str}` but format may be invalid.\n"
+                f"Use format: `<:name:123456789>` or just the emoji ID.\n"
+                f"Use `/hofpreview` to test!",
+                ephemeral=True
+            )
+    else:
+        await i.response.send_message(
+            f"✅ Emoji for **{cat_info['name']}** cleared.",
+            ephemeral=True
+        )
+
+@bot.tree.command(name="hofemoji2", description="Set emoji for more Hall of Fame categories")
+@app_commands.describe(
+    category="Select category to set emoji for",
+    emoji="Discord custom emoji (e.g. <:emoji:123456789>) or leave blank to clear"
+)
+@app_commands.choices(category=HOF_CHOICES_2)
+async def hofemoji2(i: discord.Interaction, category: str, emoji: str = None):
+    if i.guild.id not in hof_data_store:
+        hof_data_store[i.guild.id] = {}
+    
+    cat_info = HOF_CATEGORIES.get(category, {"name": category})
+    current_data = hof_data_store.get(i.guild.id, {}).get(category, {})
+    
+    # Handle both old format (list) and new format (dict)
+    if isinstance(current_data, dict):
+        members = current_data.get("members", [])
+    else:
+        members = current_data if isinstance(current_data, list) else []
+    
+    # Update with emoji
+    emoji_str = emoji.strip() if emoji else None
+    hof_data_store[i.guild.id][category] = {
+        "members": members,
+        "emoji_id": emoji_str
+    }
+    
+    if emoji_str:
+        parsed = parse_emoji_string(emoji_str)
+        if parsed:
+            await i.response.send_message(
+                f"✅ Emoji for **{cat_info['name']}** set to {emoji_str}\n"
+                f"Use `/hofpreview` to see it in the image!",
+                ephemeral=True
+            )
+        else:
+            await i.response.send_message(
+                f"⚠️ Emoji set to `{emoji_str}` but format may be invalid.\n"
+                f"Use format: `<:name:123456789>` or just the emoji ID.\n"
+                f"Use `/hofpreview` to test!",
+                ephemeral=True
+            )
+    else:
+        await i.response.send_message(
+            f"✅ Emoji for **{cat_info['name']}** cleared.",
+            ephemeral=True
+        )
+
 @bot.tree.command(name="hoflist", description="List current Hall of Fame entries")
 async def hoflist(i: discord.Interaction):
     data = hof_data_store.get(i.guild.id, {})
@@ -2037,13 +2612,29 @@ async def hoflist(i: discord.Interaction):
     
     embed = create_embed("🏆 Hall of Fame Data", "Current entries:")
     
-    for cat_key, members in data.items():
+    for cat_key, cat_data in data.items():
+        # Handle both old format (list) and new format (dict)
+        if isinstance(cat_data, dict):
+            members = cat_data.get("members", [])
+            emoji_id = cat_data.get("emoji_id", "")
+        else:
+            members = cat_data if isinstance(cat_data, list) else []
+            emoji_id = ""
+        
         if members:
-            cat_info = HOF_CATEGORIES.get(cat_key, {"name": cat_key.replace("_", " ").title()})
-            member_text = ", ".join(members[:10])
+            cat_info = HOF_CATEGORIES.get(cat_key, {"name": cat_key.replace("_", " ").title(), "icon": "🏆"})
+            # Bullet point each member
+            member_text = "\n".join(f"• {m}" for m in members[:10])
             if len(members) > 10:
-                member_text += f"... (+{len(members) - 10} more)"
-            embed.add_field(name=f"{cat_info['name']} ({len(members)})", value=member_text or "None", inline=False)
+                member_text += f"\n• ... (+{len(members) - 10} more)"
+            
+            # Show emoji info if set
+            emoji_indicator = f" {emoji_id}" if emoji_id else ""
+            embed.add_field(
+                name=f"{cat_info.get('icon', '🏆')} {cat_info['name']} ({len(members)}){emoji_indicator}", 
+                value=member_text or "None", 
+                inline=False
+            )
     
     await i.response.send_message(embed=embed, ephemeral=True)
 
