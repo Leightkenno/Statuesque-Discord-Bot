@@ -84,47 +84,203 @@ WARBANDS_CAMPS = ["Dark Warriors' Fortress (lvl 14)", "Red Dragon Isle (lvl 35)"
 # Minigame Spotlight rotation (14 day cycle)
 SPOTLIGHT_GAMES = ["Pest Control", "Soul Wars", "Fist of Guthix", "Barbarian Assault", "Conquest", "Castle Wars", "Stealing Creation", "Cabbage Facepunch Bonanza", "Heist", "Mobilising Armies", "Spotlight: TBD", "The Great Orb Project", "Flash Powder Factory", "Trouble Brewing"]
 VALUABLE_DROPS = [
-    # Nex
-    "torva", "pernix", "virtus", "zaryte bow", "zaryte crossbow",
-    # AoD
-    "wand of the praesul", "imperium core", "praesul codex", "chest of praesul",
-    # Telos
-    "dormant", "orb", "reprisor", "seren godbow", "staff of sliske", "zaros godsword",
+    # Amascut (Tombs of Amascut / TLA)
+    "devourer's guard", "devourers guard", "devourer's nexus", "devourers nexus",
+    "tumeken's robe top", "tumeken's robe bottom", "tumeken's gloves", "tumeken's boots",
+    "tumekens robe", "tumeken's light", "tumekens light",
+    # Araxxor
+    "araxxi", "leg piece", "araxyte fang", "araxyte eye", "araxyte web", "fang", "eye", "web", "hilt", "araxyte",
+    # Arch-Glacor
+    "frozen core", "core of leng", "leng artefact", "leng artifact", "dark nilas", "dark shard of leng", 
+    "glacor remnants", "wen book", "scripture of wen",
+    # ROTS (Rise of the Six)
+    "malevolent shield", "merciless shield", "vengeful shield", "malevolent kiteshield", 
+    "merciless kiteshield", "vengeful kiteshield",
+    # Croesus
+    "cryptbloom helm", "cryptbloom top", "cryptbloom bottom", "cryptbloom bottoms", "cryptbloom gloves", 
+    "cryptbloom boots", "cryptbloom", "sporehammer", "bik book", "scripture of bik", "foultorch", "sporesack",
+    # ED2 (Dragonkin Laboratory)
+    "greater barge", "greater flurry", "greater fury", "blast diffusion boots",
+    # Gate of Elidinis
+    "runic attuner", "memory dowser", "elidinis book", "scripture of elidinis",
+    # Kerapac
+    "staff piece", "jas book", "scripture of jas", "fractured staff of armadyl", "fsoa",
+    "greater concentrated blast",
+    # AoD (Nex: Angel of Death)
+    "praesul codex", "wand of the praesul", "imperium core", "shadow chest", "blood chest", "ice chest",
+    "chest of praesul", "shadow praesul", "blood praesul", "ice praesul",
+    # Raksha
+    "shadow spike", "greater ricochet", "greater chain", "divert", "fleeting boots", "laceration boots",
+    # Rasial
+    "omni guard", "soulbound lantern", "first necromancer's crown", "first necromancer's robe top",
+    "first necromancer's robe bottom", "first necromancer's gloves", "first necromancer's boots",
+    "first necromancer", "death guard",
+    # Osseous
+    "jail cell key",
+    # Sanctum of Rebirth
+    "roar of awakening", "ode to deceit", "amascut book", "scripture of amascut", "shard of genesis",
+    "eye of the dagannoth", "horn of the dagannoth", "amulet of blood fury",
+    # ED3 (Shadow Reef)
+    "eldritch crossbow", "eldritch stock", "eldritch limb", "eldritch limbs", "eldritch mechanism",
+    "ecb", "ambassador",
     # Solak
-    "blightbound", "erethdor's grimoire", "grimoire",
-    # ED
-    "greater ricochet", "greater chain", "divert", "shadow spike", "laceration boots", "blast diffusion boots",
+    "blightbound crossbow", "blightbound", "erethdor's grimoire", "grimoire",
+    # Telos
+    "pure orb", "volcanic orb", "corrupted orb", "orb", "dormant seren godbow", "dormant staff of sliske",
+    "dormant zaros godsword", "seren godbow", "staff of sliske", "zaros godsword", "reprisal codex", "reprisor",
+    # TzKal-Zuk
+    "obsidian blade", "magma core", "ancient hilt", "magma tempest codex", "ful book", "scripture of ful",
     # Vorago
     "seismic wand", "seismic singularity", "vitalis",
-    # ED3/Raksha
-    "eldritch crossbow", "ecb", "greater chain", "divert", "fleeting boots",
-    # FSOA/Kerapac
-    "fractured", "fsoa", "staff of armadyl", "greater concentrated blast",
-    # Croesus
-    "cryptbloom",
-    # Zammy
-    "bow of the last guardian", "vestments", "chaos roar",
-    # Arch-Glacor
-    "frozen core", "dark nilas", "leng artefact", "dark shard of leng", "glacor remnants",
+    # Zamorak
+    "chaos roar codex", "chaos roar", "bow of the last guardian", "bolg",
+    "vestments of havoc hood", "vestments of havoc top", "vestments of havoc bottom", "vestments of havoc boots",
+    "vestments of havoc", "vestments hood", "vestments top", "vestments bottom", "vestments boots",
+    # Vorkath
+    "vorkath scale", "lord of bones codex", "lord of bones",
+    # Nex
+    "torva", "pernix", "virtus", "zaryte bow", "zaryte crossbow",
     # GWD2
     "crest of", "lance", "anima core", "dormant anima",
-    # Araxxor
-    "araxxi", "leg piece", "fang", "eye", "web", "hilt", "araxyte",
     # Clue/Rare
-    "hazelmere", "blurberry", "orlando", "cheese+tom", "third-age", "blood dye", "barrows dye", "shadow dye", "ice dye", "backstab cape",
+    "hazelmere", "blurberry", "orlando", "cheese+tom", "third-age", "blood dye", "barrows dye", 
+    "shadow dye", "ice dye", "backstab cape",
     # Codex/Scripture
     "shard of", "codex", "scripture", "complete",
-    # Rasial (Necromancy)
-    "soulbound lantern", "soulbound", "omni guard", "death guard", "undead slayer codex", "first necromancer",
-    # Sanctum of Rebirth
-    "ode to deceit", "roar of awakening", "shard of genesis", "eye of the dagannoth", "horn of the dagannoth", "amulet of blood fury",
     # Pets
-    "pet", "vitalis", "bombi", "barry", "shrimpy", "rex", "mallory", "otto", "baby araxxi", "kevin", "lilwyr", "rawrvek", "greg", "vindiddy",
-    # Zamorak
-    "infernal", "vestments of havoc", "bow of the last guardian",
+    "pet", "bombi", "barry", "shrimpy", "rex", "mallory", "otto", "baby araxxi", "kevin", "lilwyr", "rawrvek", "greg", "vindiddy",
     # Misc high value
-    "essence of finality", "eof", "enchantment of", "scripture of",
+    "essence of finality", "eof", "enchantment of", "scripture of", "infernal",
 ]
+
+# Mapping of drop keywords to guaranteed wiki image URLs
+DROP_IMAGES = {
+    # Amascut
+    "devourer": "https://runescape.wiki/images/thumb/Devourer%27s_Guard_detail.png/88px-Devourer%27s_Guard_detail.png?bf9e2",
+    "tumeken": "https://runescape.wiki/images/thumb/Tumeken%27s_Light_detail.png/160px-Tumeken%27s_Light_detail.png?9943b",
+    # Araxxor
+    "leg piece": "https://runescape.wiki/images/thumb/Spider_leg_top_detail.png/120px-Spider_leg_top_detail.png?8e023",
+    "araxyte fang": "https://runescape.wiki/images/thumb/Araxxi%27s_fang_detail.png/85px-Araxxi%27s_fang_detail.png?10be0",
+    "araxyte eye": "https://runescape.wiki/images/thumb/Araxxi%27s_eye_detail.png/100px-Araxxi%27s_eye_detail.png?ced9b",
+    "araxyte web": "https://runescape.wiki/images/thumb/Araxxi%27s_web_detail.png/120px-Araxxi%27s_web_detail.png?e1f16",
+    "fang": "https://runescape.wiki/images/thumb/Araxxi%27s_fang_detail.png/85px-Araxxi%27s_fang_detail.png?10be0",
+    "eye": "https://runescape.wiki/images/thumb/Araxxi%27s_eye_detail.png/100px-Araxxi%27s_eye_detail.png?ced9b",
+    "web": "https://runescape.wiki/images/thumb/Araxxi%27s_web_detail.png/120px-Araxxi%27s_web_detail.png?e1f16",
+    # Arch-Glacor
+    "core of leng": "https://runescape.wiki/images/Frozen_core_of_Leng_detail.png",
+    "frozen core": "https://runescape.wiki/images/Frozen_core_of_Leng_detail.png",
+    "leng artefact": "https://runescape.wiki/images/Leng_artefact_detail.png",
+    "leng artifact": "https://runescape.wiki/images/Leng_artefact_detail.png",
+    "dark nilas": "https://runescape.wiki/images/Dark_nilas_detail.png",
+    "wen book": "https://runescape.wiki/images/Scripture_of_Wen_detail.png",
+    "scripture of wen": "https://runescape.wiki/images/Scripture_of_Wen_detail.png",
+    # ROTS
+    "malevolent": "https://runescape.wiki/images/Malevolent_kiteshield_detail.png",
+    "merciless": "https://runescape.wiki/images/Merciless_kiteshield_detail.png",
+    "vengeful": "https://runescape.wiki/images/Vengeful_kiteshield_detail.png",
+    # Croesus
+    "cryptbloom": "https://runescape.wiki/images/Cryptbloom_helm_detail.png",
+    "sporehammer": "https://runescape.wiki/images/thumb/Croesus_sporehammer_detail.png/100px-Croesus_sporehammer_detail.png?79b14",
+    "bik book": "https://runescape.wiki/images/Scripture_of_Bik_detail.png",
+    "scripture of bik": "https://runescape.wiki/images/Scripture_of_Bik_detail.png",
+    "foultorch": "https://runescape.wiki/images/thumb/Croesus_foultorch_detail.png/100px-Croesus_foultorch_detail.png?7c2ab",
+    "sporesack": "https://runescape.wiki/images/thumb/Croesus_spore_sack_detail.png/100px-Croesus_spore_sack_detail.png?ee4ac",
+    # ED2
+    "greater barge": "https://runescape.wiki/images/thumb/Greater_Barge_ability_codex_detail.png/90px-Greater_Barge_ability_codex_detail.png?26784",
+    "greater flurry": "https://runescape.wiki/images/thumb/Greater_Flurry_ability_codex_detail.png/90px-Greater_Flurry_ability_codex_detail.png?b9c55",
+    "greater fury": "https://runescape.wiki/images/thumb/Greater_Flurry_ability_codex_detail.png/90px-Greater_Flurry_ability_codex_detail.png?b9c55",
+    "blast diffusion": "https://runescape.wiki/images/thumb/Greater_Flurry_ability_codex_detail.png/90px-Greater_Flurry_ability_codex_detail.png?b9c55",
+    # Gate of Elidinis
+    "runic attuner": "https://runescape.wiki/images/Runic_attuner_detail.png",
+    "memory dowser": "https://runescape.wiki/images/Memory_dowser_detail.png",
+    "elidinis book": "https://runescape.wiki/images/Scripture_of_Elidinis_detail.png",
+    "scripture of elidinis": "https://runescape.wiki/images/Scripture_of_Elidinis_detail.png",
+    # Kerapac
+    "staff piece": "https://runescape.wiki/images/Fractured_Staff_of_Armadyl_detail.png",
+    "jas book": "https://runescape.wiki/images/Scripture_of_Jas_detail.png",
+    "scripture of jas": "https://runescape.wiki/images/Scripture_of_Jas_detail.png",
+    "fsoa": "https://runescape.wiki/images/Fractured_Staff_of_Armadyl_detail.png",
+    "fractured staff": "https://runescape.wiki/images/Fractured_Staff_of_Armadyl_detail.png",
+    "greater concentrated": "https://runescape.wiki/images/thumb/Greater_Concentrated_blast_ability_codex_detail.png/100px-Greater_Concentrated_blast_ability_codex_detail.png?97097",
+    # AoD
+    "praesul codex": "https://runescape.wiki/images/Praesul_codex_detail.png",
+    "wand of the praesul": "https://runescape.wiki/images/Wand_of_the_praesul_detail.png",
+    "imperium core": "https://runescape.wiki/images/Imperium_core_detail.png",
+    "chest": "https://runescape.wiki/images/Praesul_codex_detail.png",
+    # Raksha
+    "shadow spike": "https://runescape.wiki/images/Shadow_spike_detail.png",
+    "greater ricochet": "https://runescape.wiki/images/thumb/Greater_Ricochet_ability_codex_detail.png/100px-Greater_Ricochet_ability_codex_detail.png?08545",
+    "greater chain": "https://runescape.wiki/images/thumb/Greater_Chain_ability_codex_detail.png/100px-Greater_Chain_ability_codex_detail.png?cfdfd",
+    "divert": "https://runescape.wiki/images/thumb/Divert_ability_codex_detail.png/100px-Divert_ability_codex_detail.png?3f710",
+    "fleeting boots": "https://runescape.wiki/images/Fleeting_boots_detail.png",
+    "laceration boots": "https://runescape.wiki/images/Laceration_boots_detail.png",
+    # Rasial
+    "omni guard": "https://runescape.wiki/images/Omni_guard_detail.png",
+    "soulbound lantern": "https://runescape.wiki/images/Soulbound_lantern_detail.png",
+    "first necromancer": "https://runescape.wiki/images/thumb/Robe_top_of_the_First_Necromancer_detail.png/128px-Robe_top_of_the_First_Necromancer_detail.png?25297",
+    "death guard": "https://runescape.wiki/images/Death_guard_detail.png",
+    # Osseous
+    "jail cell key": "https://runescape.wiki/images/Jail_cell_key_detail.png",
+    # Sanctum of Rebirth
+    "roar of awakening": "https://runescape.wiki/images/Roar_of_Awakening_detail.png",
+    "ode to deceit": "https://runescape.wiki/images/Ode_to_Deceit_detail.png",
+    "amascut book": "https://runescape.wiki/images/Scripture_of_Amascut_detail.png",
+    "scripture of amascut": "https://runescape.wiki/images/Scripture_of_Amascut_detail.png",
+    "shard of genesis": "https://runescape.wiki/images/thumb/Shard_of_Genesis_Essence_detail.png/100px-Shard_of_Genesis_Essence_detail.png?ac363",
+    "eye of the dagannoth": "https://runescape.wiki/images/Eye_of_the_Dagannoth_detail.png",
+    "horn of the dagannoth": "https://runescape.wiki/images/Horn_of_the_Dagannoth_detail.png",
+    "blood fury": "https://runescape.wiki/images/Amulet_of_blood_fury_detail.png",
+    # ED3
+    "eldritch": "https://runescape.wiki/images/Eldritch_crossbow_detail.png",
+    "ecb": "https://runescape.wiki/images/Eldritch_crossbow_detail.png",
+    # Solak
+    "blightbound": "https://runescape.wiki/images/Blightbound_crossbow_detail.png",
+    "grimoire": "https://runescape.wiki/images/Erethdor%27s_grimoire_detail.png",
+    # Telos
+    "orb": "https://runescape.wiki/images/Corrupted_orb_detail.png",
+    "pure orb": "https://runescape.wiki/images/Pure_orb_detail.png",
+    "volcanic orb": "https://runescape.wiki/images/Volcanic_orb_detail.png",
+    "corrupted orb": "https://runescape.wiki/images/Corrupted_orb_detail.png",
+    "seren godbow": "https://runescape.wiki/images/Seren_godbow_detail.png",
+    "staff of sliske": "https://runescape.wiki/images/Staff_of_Sliske_detail.png",
+    "zaros godsword": "https://runescape.wiki/images/Zaros_godsword_detail.png",
+    "reprisal": "https://runescape.wiki/images/Reprisal_detail.png",
+    "dormant": "https://runescape.wiki/images/Dormant_Seren_godbow_detail.png",
+    # TzKal-Zuk
+    "obsidian blade": "https://runescape.wiki/images/Obsidian_blade_detail.png",
+    "magma core": "https://runescape.wiki/images/Magma_core_detail.png",
+    "ancient hilt": "https://runescape.wiki/images/Ancient_hilt_detail.png",
+    "magma tempest": "https://runescape.wiki/images/Magma_Tempest_detail.png",
+    "ful book": "https://runescape.wiki/images/Scripture_of_Ful_detail.png",
+    "scripture of ful": "https://runescape.wiki/images/Scripture_of_Ful_detail.png",
+    # Vorago
+    "seismic wand": "https://runescape.wiki/images/Seismic_wand_detail.png",
+    "seismic singularity": "https://runescape.wiki/images/Seismic_singularity_detail.png",
+    "vitalis": "https://runescape.wiki/images/Vitalis_detail.png",
+    # Zamorak
+    "chaos roar": "https://runescape.wiki/images/Chaos_Roar_detail.png",
+    "bolg": "https://runescape.wiki/images/Bow_of_the_Last_Guardian_detail.png",
+    "bow of the last guardian": "https://runescape.wiki/images/Bow_of_the_Last_Guardian_detail.png",
+    "vestments": "https://runescape.wiki/images/Vestments_of_havoc_hood_detail.png",
+    # Vorkath
+    "vorkath": "https://runescape.wiki/images/Vorkath_scale_detail.png",
+    "lord of bones": "https://runescape.wiki/images/Lord_of_Bones_detail.png",
+    # Nex
+    "torva": "https://runescape.wiki/images/Torva_full_helm_detail.png",
+    "pernix": "https://runescape.wiki/images/Pernix_cowl_detail.png",
+    "virtus": "https://runescape.wiki/images/Virtus_mask_detail.png",
+    "zaryte": "https://runescape.wiki/images/Zaryte_bow_detail.png",
+    # Clue/Rare
+    "hazelmere": "https://runescape.wiki/images/Hazelmere%27s_signet_ring_detail.png",
+    "third-age": "https://runescape.wiki/images/Third-age_platebody_detail.png",
+    "blood dye": "https://runescape.wiki/images/Blood_dye_detail.png",
+    "barrows dye": "https://runescape.wiki/images/Barrows_dye_detail.png",
+    "shadow dye": "https://runescape.wiki/images/Shadow_dye_detail.png",
+    "ice dye": "https://runescape.wiki/images/Ice_dye_detail.png",
+    # Generic fallback
+    "codex": "https://runescape.wiki/images/Praesul_codex_detail.png",
+    "scripture": "https://runescape.wiki/images/Scripture_of_Jas_detail.png",
+}
 TRASH_DROPS = ["triskelion", "clue scroll", "elite clue", "hard clue", "master clue", "dragon helm", "dragon shield", "dragon platelegs", "dragon plateskirt", "dragon chainbody", "dragon med", "dragon sq", "dragon dagger", "dragon longsword", "dragon battleaxe", "dragon mace", "warrior's ring", "berserker ring", "seers' ring", "archers' ring", "rune", "adamant", "mithril", "black", "steel", "iron", "bronze", "ancient effigy", "effigy", "lootbeam", "starved ancient effigy", "clue", "casket", "mimic", "puzzle", "reward casket", "Guthix bow", "saradomin sword", "zamorak spear", "loop half", "tooth half", "shield left half", "shield right half", "dragon spear", "curved bone", "long bone"]
 
 # Item aliases for /price command - maps shorthand to full item name
@@ -616,14 +772,27 @@ async def check_player_activities():
 async def announce_drop(rsn, guild_id, text):
     embed = create_embed("💎 Rare Drop!", f"**{rsn}**\n\n{text}", BOT_CONFIG["gold_color"])
     
-    # Try to extract item name and set thumbnail
-    m = re.search(r"(?:received|found|obtained|got)\s+(?:a\s+|an\s+)?(.+?)(?:\s+from|\s+on|\s+at|\s*!|\s*\.|$)", text, re.IGNORECASE)
-    if m:
-        item_name = m.group(1).strip().rstrip('.,!')
-        # Handle special characters for wiki URLs
-        wiki_name = item_name.replace(' ', '_').replace("'", "%27").replace(",", "%2C")
-        # Try detail.png first, common format for items
-        embed.set_thumbnail(url=f"https://runescape.wiki/images/{wiki_name}_detail.png")
+    # Try to find a matching image from our DROP_IMAGES mapping
+    text_lower = text.lower()
+    image_url = None
+    
+    # Check each keyword in DROP_IMAGES against the drop text
+    for keyword, url in DROP_IMAGES.items():
+        if keyword.lower() in text_lower:
+            image_url = url
+            break
+    
+    # If no match found in mapping, try to extract item name for wiki URL
+    if not image_url:
+        m = re.search(r"(?:received|found|obtained|got)\s+(?:a\s+|an\s+)?(.+?)(?:\s+from|\s+on|\s+at|\s*!|\s*\.|$)", text, re.IGNORECASE)
+        if m:
+            item_name = m.group(1).strip().rstrip('.,!')
+            wiki_name = item_name.replace(' ', '_').replace("'", "%27").replace(",", "%2C")
+            image_url = f"https://runescape.wiki/images/{wiki_name}_detail.png"
+    
+    # Set the thumbnail if we have an image URL
+    if image_url:
+        embed.set_thumbnail(url=image_url)
     
     # Send to the specific guild where this clan member belongs
     guild = bot.get_guild(guild_id)
@@ -1605,6 +1774,98 @@ async def spotlight(i: discord.Interaction):
     embed.add_field(name="💰 Bonus", value="• **3x Thaler** earnings\n• Increased rewards\n• More players active!", inline=False)
     await i.response.send_message(embed=embed)
 
+# Raven spawn locations in Prifddinas
+RAVEN_LOCATIONS = [
+    {"clan": "Crwys", "description": "Behind the building with Coeden inside (SW corner)"},
+    {"clan": "Crwys", "description": "East of the house east of the spirit tree"},
+    {"clan": "Cadarn", "description": "South of the house with the spinning wheel (opposite Max Guild entrance)"},
+    {"clan": "Cadarn", "description": "Window outside Haf's Battlestaves"},
+    {"clan": "Trahaearn", "description": "South of the Seren stones between the two buildings"},
+    {"clan": "Iorwerth", "description": "East of the Iorwerth church, on the southern ledge"},
+    {"clan": "Iorwerth", "description": "East of the Iorwerth church, on the ledge between buildings"},
+    {"clan": "Iorwerth", "description": "West of the Iorwerth church"},
+    {"clan": "Iorwerth", "description": "West of Rush of Blood entrance, south corner of the house"},
+]
+
+def get_raven_status():
+    """Calculate raven spawn status based on 13-day cycle from Oct 4, 2014"""
+    first_spawn = datetime(2014, 10, 4, 0, 0, 0, tzinfo=timezone.utc)
+    now = datetime.now(timezone.utc)
+    
+    days_since = (now - first_spawn).days
+    cycle_day = days_since % 13
+    spawn_duration_hours = 23 + (50/60)
+    
+    current_cycle_start = first_spawn + timedelta(days=(days_since // 13) * 13)
+    time_in_cycle = (now - current_cycle_start).total_seconds() / 3600
+    
+    is_spawned = cycle_day == 0 and time_in_cycle < spawn_duration_hours
+    
+    if is_spawned:
+        spawn_end = current_cycle_start + timedelta(hours=spawn_duration_hours)
+        time_left = spawn_end - now
+        hours_left = int(time_left.total_seconds() // 3600)
+        mins_left = int((time_left.total_seconds() % 3600) // 60)
+        return {
+            "spawned": True,
+            "time_remaining": f"{hours_left}h {mins_left}m",
+            "last_spawn": current_cycle_start,
+            "next_spawn": current_cycle_start + timedelta(days=13),
+        }
+    else:
+        if cycle_day == 0 and time_in_cycle >= spawn_duration_hours:
+            next_spawn = current_cycle_start + timedelta(days=13)
+        else:
+            next_spawn = first_spawn + timedelta(days=((days_since // 13) + 1) * 13)
+        
+        time_until = next_spawn - now
+        days_until = time_until.days
+        hours_until = int((time_until.total_seconds() % 86400) // 3600)
+        mins_until = int((time_until.total_seconds() % 3600) // 60)
+        
+        last_spawn = current_cycle_start if cycle_day == 0 else first_spawn + timedelta(days=(days_since // 13) * 13)
+        
+        return {
+            "spawned": False,
+            "days_until": days_until,
+            "hours_until": hours_until,
+            "mins_until": mins_until,
+            "time_until_str": f"{days_until}d {hours_until}h {mins_until}m" if days_until > 0 else f"{hours_until}h {mins_until}m",
+            "last_spawn": last_spawn,
+            "next_spawn": next_spawn,
+        }
+
+@bot.tree.command(name="raven", description="Prifddinas Raven spawn timer for Ravensworn title")
+async def raven(i: discord.Interaction):
+    status = get_raven_status()
+    
+    if status["spawned"]:
+        embed = create_embed("🐦‍⬛ Raven SPAWNED!", "A raven is currently in Prifddinas!", 0x9B59B6)
+        embed.add_field(name="⏰ Time Remaining", value=f"**{status['time_remaining']}** until despawn", inline=False)
+        embed.add_field(
+            name="📍 Possible Locations",
+            value="Location varies by world. Check all 9 spots:\n" + "\n".join(f"• **{loc['clan']}:** {loc['description']}" for loc in RAVEN_LOCATIONS),
+            inline=False
+        )
+        embed.add_field(
+            name="💡 Tips",
+            value="• Location is the same per world for all players\n• You can only spot **1 raven per spawn**\n• Spotting makes it disappear on ALL worlds for you\n• FC/Discord servers often call out locations",
+            inline=False
+        )
+    else:
+        embed = create_embed("🐦‍⬛ Raven Timer", "For the Ravensworn title", 0x7289DA)
+        embed.add_field(name="⏰ Next Spawn", value=f"**{status['time_until_str']}**\n<t:{int(status['next_spawn'].timestamp())}:F>", inline=False)
+        embed.add_field(name="📅 Spawn Schedule", value=f"Last spawn: <t:{int(status['last_spawn'].timestamp())}:D>\nNext spawn: <t:{int(status['next_spawn'].timestamp())}:D>", inline=False)
+    
+    embed.add_field(
+        name="ℹ️ About Ravensworn",
+        value="• Spot **13 ravens** to unlock the title\n• Ravens spawn every **13 days** at 00:00 UTC\n• Each spawn lasts **23h 50m**\n• Minimum **156 days** to complete",
+        inline=False
+    )
+    embed.set_footer(text="Requires Plague's End • runescape.wiki/w/Raven_(Prifddinas)")
+    embed.set_thumbnail(url="https://runescape.wiki/images/Raven_%28Prifddinas%29.png")
+    await i.response.send_message(embed=embed)
+
 @bot.tree.command(name="events", description="All current game events")
 async def events(i: discord.Interaction):
     await i.response.defer()
@@ -1616,6 +1877,7 @@ async def events(i: discord.Interaction):
     sh = get_sinkhole_times()
     sp = get_spotlight_game()
     vos_data = await fetch_vos()
+    raven_status = get_raven_status()
     
     embed = create_embed("🗓️ Current Events", f"Game Time: **{get_game_time()} GT**", 0x3498DB)
     
@@ -1634,6 +1896,12 @@ async def events(i: discord.Interaction):
             vos_txt = " & ".join(clans)
     embed.add_field(name="🔮 Voice of Seren", value=vos_txt, inline=True)
     
+    # Raven
+    if raven_status["spawned"]:
+        embed.add_field(name="🐦‍⬛ Raven", value=f"**SPAWNED!**\n{raven_status['time_remaining']} left", inline=True)
+    else:
+        embed.add_field(name="🐦‍⬛ Raven", value=f"Next: {raven_status['time_until_str']}", inline=True)
+    
     # Spotlight
     embed.add_field(name="🎮 Spotlight", value=f"**{sp['game']}**\n{sp['days_remaining']}d left", inline=True)
     
@@ -1646,7 +1914,7 @@ async def events(i: discord.Interaction):
     # Sinkholes
     embed.add_field(name="🕳️ Sinkholes", value=f"Next: **{sh['next']}**\n{sh['minutes_until']}m", inline=True)
     
-    embed.add_field(name="📋 Commands", value="`/vos` `/merchant` `/warbands` `/cache` `/sinkholes` `/spotlight` `/wildyflash`", inline=False)
+    embed.add_field(name="📋 Commands", value="`/vos` `/merchant` `/warbands` `/cache` `/sinkholes` `/spotlight` `/wildyflash` `/raven`", inline=False)
     await i.followup.send(embed=embed)
 
 @bot.tree.command(name="price", description="Check GE prices")
